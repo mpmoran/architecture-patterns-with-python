@@ -82,3 +82,17 @@
 - Not everything has to be an object. "Sometimes, it just isn't a thing".
 - These don't have a home in an entity or value object
   - e.g., allocating an order among different batches of stock
+
+#### Exceptions as Domain Concept
+
+- **Domain exception**: an exception that represents a domain concept
+  - e.g., an out-of-stock exception
+
+### Ch. 2 Repository Pattern
+
+- **Repository pattern**: an abstraction over data storage so that the model layer is decoupled from the data layer
+- The domain model should have no stateful dependencies. Infrastructure concerns should not "bleed over" into the domain model.
+- **Onion architecture**: The model is on the "inside" and dependencies flow inward to it.
+- **Object-relational mapper (ORM)**: a framework that bridges the gap between objects/domain models and databases
+  - Gives us **persistence ignorance**: the domain model doesn't need to know how data is loaded or persisted
+  - We can map the domain model to the database model in the persistence storage implementation, not in the domain model implementation.
