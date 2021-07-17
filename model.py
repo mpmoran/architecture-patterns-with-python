@@ -3,6 +3,10 @@ from datetime import date
 from typing import List, Optional, Set
 
 
+class OutOfStock(Exception):
+    pass
+
+
 @dataclass(frozen=True)
 class OrderLine:
     orderid: str
@@ -58,8 +62,14 @@ class Batch:
 
 
 def allocate(line: OrderLine, batches: List[Batch]) -> str:
-    batch = next(
-        b for b in sorted(batches) if b.can_allocate(line)
-    )
+    # get the first batch that can fulfill the order line
+    try:
+        batch = next(
+            b for b in sorted(batches) if b.can_allocate(line)
+        )
+    except StopIteration:
+        raise OutOfStock(f'Cannot allocate {line.sku} to a batch because '
+                         'there is not enough stock.')
+
     batch.allocate(line)
     return batch.reference
