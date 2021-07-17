@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 import pytest
 
-from model import Batch, OrderLine, allocate
+from model import Batch, OrderLine, allocate, OutOfStock
 
 
 # from model import ...
@@ -106,3 +106,11 @@ def test_cannot_allocate_same_line_more_than_once():
     batch.allocate(line)
 
     assert batch.available_quantity == 8
+
+
+def test_raises_out_of_stock_exception_if_cannot_allocate():
+    batch, line1 = make_batch_and_line('SMALL-FORK', 10, 10)
+    allocate(line1, [batch])
+
+    with pytest.raises(OutOfStock, match='SMALL-FORK'):
+        allocate(OrderLine('order2', 'SMALL-FORK', 1), [batch])
