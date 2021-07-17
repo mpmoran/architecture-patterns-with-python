@@ -91,8 +91,17 @@
 ### Ch. 2 Repository Pattern
 
 - **Repository pattern**: an abstraction over data storage so that the model layer is decoupled from the data layer
+  - It pretends that all data is stored in memory, preventing the coupling of the domain model to the database.
+  - The simplest repository has add() and get() methods.
+    - These methods are to be used in the domain and service layers.
+  - Trade offs
+    - The repository pattern has a cost of added complexity, more moving parts, and additional maintenance.
+    - Creating a fake repo, for testing purposes, should be easy; otherwise, the design/abstraction is too complicated.
+    - Simple applications don't need a repository pattern. Coupling is OK.
 - The domain model should have no stateful dependencies. Infrastructure concerns should not "bleed over" into the domain model.
 - **Onion architecture**: The model is on the "inside" and dependencies flow inward to it.
 - **Object-relational mapper (ORM)**: a framework that bridges the gap between objects/domain models and databases
   - Gives us **persistence ignorance**: the domain model doesn't need to know how data is loaded or persisted
-  - We can map the domain model to the database model in the persistence storage implementation, not in the domain model implementation.
+  - We map the domain model to the database model in the persistence storage implementation, not in the domain model implementation.
+- **Port**: interface between application and what we are abstracting away
+- **Adapter**: implementation behind the interface/port
