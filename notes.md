@@ -105,3 +105,38 @@
   - We map the domain model to the database model in the persistence storage implementation, not in the domain model implementation.
 - **Port**: interface between application and what we are abstracting away
 - **Adapter**: implementation behind the interface/port
+
+### Ch. 3 On Coupling and Abstractions
+
+- Abstractions should be simple and hide messy details.
+  - They can make systems easier to test and maintain
+    - e.g., simplying interface between business logic and I/Oe
+- **Coupling**: when changing component A breaks component B
+  - Signs of wrongly coupled code:
+    - Tests are difficult to write and involve a lot of setup.
+    - Code is not easily extensible.
+    - Code and tests is difficult to read and write.
+- **High cohesion**: When coupling is local and each component supports the others. We want to aim for this.
+
+#### Choosing the Right Abstractions
+
+1. What is happening the in the code? Identify the responsibilities the code is assuming.
+  - What implicit concepts can be made explicit?
+  - What are the dependencies and what is the core business logic?
+1. Separate *what* you want to do from *how* you are going to do it.
+1. Find a *simplifying* abstraction: one that lets you hide messy details.
+1. Can I choose a "Python data structure to represent the state of the messy system and then try to imagine a single function that can return that state?"
+1. Can I draw a line between the systems to stick the abstraction in?
+
+#### Implenting the Abstractions
+
+- **Functional Core, Imperative Shell**: create a core of code that does not depend on external state and test with input of real world
+  - e.g., whether to move, copy, or delete a file in a folder syncing program; the decision-making here should be in the functional core; the IO should be in the imperative shell.
+  - The IO/imperative shell code can be abstracted away (into a function, etc.) as well.
+
+#### Edge-to-Edge Testing
+
+- **Edge-to-edge testing**: unit testing and end-to-end testing a piece of code
+  - Functions, classes, etc. can be modified to support edge-to-edge testing.
+- Avoid using mocks in tests. Instead separate responsibilities in code into objects that can be replaced with a test double.
+- TDD is a "design practice first and testing practice second". The tests record design choices and serve to explain the system to us.
