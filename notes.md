@@ -121,8 +121,8 @@
 #### Choosing the Right Abstractions
 
 1. What is happening the in the code? Identify the responsibilities the code is assuming.
-  - What implicit concepts can be made explicit?
-  - What are the dependencies and what is the core business logic?
+    - What implicit concepts can be made explicit?
+    - What are the dependencies and what is the core business logic?
 1. Separate *what* you want to do from *how* you are going to do it.
 1. Find a *simplifying* abstraction: one that lets you hide messy details.
 1. Can I choose a "Python data structure to represent the state of the messy system and then try to imagine a single function that can return that state?"
@@ -140,3 +140,21 @@
   - Functions, classes, etc. can be modified to support edge-to-edge testing.
 - Avoid using mocks in tests. Instead separate responsibilities in code into objects that can be replaced with a test double.
 - TDD is a "design practice first and testing practice second". The tests record design choices and serve to explain the system to us.
+
+### Ch. 4 Out First Use Case: Flash API and Service Layer
+
+- Differences between orchestration logic, business logic, and interfacing code
+- **Service layer pattern**: orchestrates workflows and defines use cases of system
+
+#### The Plan
+
+1. Put up a Flask API in front of the `allocate` domain service function.
+1. Refactor out a service layer that will capture the use case and sit between Flask and the domain model.
+1. Experiment with different types of parameters for the service layer functions and show that the service layer's clients can be decoupled from the model layer.
+
+#### Introducing a Service Layer
+
+- **orchestration**: fetching from repository, validating input against database state, handling errors, and committing to database
+- **service layer**:
+  - AKA orchestration layer, use-case layer
+  - Splitting out a service layer often makes sense.
